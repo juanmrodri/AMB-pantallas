@@ -15,7 +15,7 @@
 #include "utn_biblioteca.h"
 #include "utn_biblioteca_arrays.h"
 #include "Pantalla.h"
-#define DISPLAYS_LEN 2
+#define DISPLAYS_LEN 1
 
 
 int main(void) {
@@ -27,19 +27,10 @@ int main(void) {
 
 	Display displayList[DISPLAYS_LEN];
 
-
-/*
-	displayList[0].id=1;
-	displayList[0].price=20000;
-	displayList[0]->name="Pantalla Samsung";
-	displayList[0].address="Av. Callao y Guido";
-	displayList[0].flagEmpty=0;
-	displayList[0].type=1;
-*/
 	disp_initList(displayList,DISPLAYS_LEN);
 	do
 	{
-		pedirIntAUsuario(&response, 1, 6, 2, "Que desea realizar:\n-------------------\n\n\t1.Ingresar una pantalla\n\n\t2.Mostrar disponibilidad\n\n\t3.Mostrar pantallas contratadas\n\n\t4.Modificar dato\n\n\t5.Limpiar pantalla\n\n\t6.Salir\n\n--------------> ","Error!");
+		pedirIntAUsuario(&response, 1, 6, 2, "Que desea realizar:\n-------------------\n\n\t1.Ingresar una pantalla\n\n\t2.Mostrar disponibilidad\n\n\t3.Mostrar pantallas contratadas\n\n\t4.Dar de baja una pantalla\n\n\t5.Limpiar pantalla\n\n\t6.Salir\n\n--------------> ","Error!");
 		switch(response)
 		{
 		case 1:
@@ -47,24 +38,31 @@ int main(void) {
 			{
 				if(disp_loadDisplay(&displayList[posDetected])==0)
 				{
-					printf("\nProceso finalizado!\n\n");
+					printf("\n\tProceso finalizado!\n\n");
 				}
 			}
 			else
 			{
-				printf("\nNo hay mas lugar para cargar\n\n");
+				printf("\n\tPor el momento, no hay mas lugar para cargar pantallas\n\n");
 			}
 			break;
 		case 2:
-			printf("\nPantallas disponibles:\n\n");
+			printf("\n\tPantallas disponibles:\n\n");
 			res = disp_showEmpty(displayList,DISPLAYS_LEN);
-			printf("%d\n\n",res);
+			if(res==0)
+			{
+				printf("\n\tNo existen pantallas disponibles por ahora\n\n");
+			}
+			else
+			{
+				printf("\t%d\n\n",res);
+			}
 			break;
 		case 3:
-			printf("\tPantallas contratadas:\n");
+			printf("\n\tPantallas contratadas:\n");
 			if(disp_showEmpty(displayList,DISPLAYS_LEN)==DISPLAYS_LEN) // tener en cuenta aca que si devuelve 0 significa que no existen posiciones
 			{
-				printf("\n\tNo existen pantallas contratas\n\n");
+				printf("\n\tPor el momento no existen pantallas contratas\n\n");
 			}
 			else
 			{
@@ -77,11 +75,18 @@ int main(void) {
 			res = disp_showEmpty(displayList,DISPLAYS_LEN);
 			if(res==DISPLAYS_LEN)
 			{
-				printf("\n\tNo existen pantallas ingresadas\n\n");
+				printf("\n\tNo se puede dar de baja ya que no existen pantallas contratadas\n\n");
 			}
 			else
 			{
-				disp_delete(displayList,DISPLAYS_LEN);
+				if(disp_delete(displayList,DISPLAYS_LEN)==0)
+				{
+					printf("\n\tLa pantalla se encuentra nuevamente disponible para contratar!\n\n");
+				}
+				else
+				{
+					printf("\n\tNo se realizo la baja!\n\n");
+				}
 			}
 
 			break;

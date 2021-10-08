@@ -47,15 +47,15 @@ int disp_loadDisplay(Display* pDisplay)
 	char name[128];
 	char address[128];
 
-	if(pedirIntAUsuario(&type, 0, 1, 2, "Por favor ingrese el tipo: LCD 0 - LED 1: \n", "Se produjo un error!\n")==0) // LCD 0 LED 1
+	if(pedirIntAUsuario(&type, 0, 1, 2, "\tPor favor ingrese el tipo: LCD 0 - LED 1: ", "\tSe produjo un error!\n")==0) // LCD 0 LED 1
 	{
-		if(pedirFloatAUsuario(&price, 1500, 85000, 2, "Por favor ingrese el precio: \n", "Se produjo un error!\n")==0)
+		if(pedirFloatAUsuario(&price, 1500, 85000, 2, "\n\tPor favor ingrese el precio: ", "\tSe produjo un error!\n")==0)
 		{
-			if(pedirTextoUsuario(name, 128, 2, "Por favor ingrese el nombre: \n", "Se produjo un error!\n")==0)
+			if(pedirTextoUsuario(name, 128, 2, "\n\tPor favor ingrese el nombre: ", "\tSe produjo un error!\n")==0)
 				{
-					if(pedirTextoUsuario(address, 128, 2, "Por favor ingrese el la direccion: \n", "Se produjo un error!\n")==0)
+					if(pedirTextoUsuario(address, 128, 2, "\n\tPor favor ingrese el la direccion: ", "\tSe produjo un error!\n")==0)
 					{
-						printf("Se cargo correctamente!\n");
+						printf("\n\tSe cargo correctamente!\n");
 						pDisplay->type = type;
 						pDisplay->price = price;
 						pDisplay->id = dameUnIdNuevo();
@@ -156,33 +156,32 @@ int disp_delete(Display* pDisplay, int len)
 	int bufferResponse;
 	if(pDisplay!=NULL && len>0)
 	{
-		if(pedirIntAUsuario(&bufferId, 1, 5, 2, "Por favor, ingrese el ID de la pantalla que quiere modificar\n", "Error!!!\n")==0)
+		if(pedirIntAUsuario(&bufferId, 1, 5, 2, "\tPor favor, ingrese el ID de la pantalla que quiere modificar: ", "\tError!!!\n")==0)
 			{
 				for(int i=0; i<len;i++)
 				{
 					if(pDisplay[i].id==bufferId)
 					{
-						printf("Usted esta por dar de baja: %s\n", pDisplay[i].name);
-						if(pedirIntAUsuario(&bufferResponse, 0, 1, 2, "Desea continuar(0 si- 1 no)?\n", "Error!!!\n")==0)
+						printf("\tUsted esta por dar de baja: %s\n", pDisplay[i].name);
+						if(pedirIntAUsuario(&bufferResponse, 0, 1, 2, "\tDesea continuar(0 si- 1 no)? ", "Error!!!\n")==0)
 						{
 							if(bufferResponse==0)
 							{
-								printf("Esta de acuerdo con borrar!\n");
 								pDisplay[i].flagEmpty=1; // lo cambio a libre!
 								ret=0;
-								printf("\nEl dato fue dado de baja!!!\n");
+								printf("\n\tEl dato fue dado de baja!!!\n");
 							}
 							else
 							{
 								// estuvo de acuerdo pero existe esta instancia donde puede fallar y no darse de baja
-								printf("No se realizara la modificacion!\n");
+								printf("\n\tNo se realizara la modificacion!\n");
 							}
 
 						}
 						else
 						{
 							// no esta de acuerdo
-							printf("No se realizara la modificacion!\n");
+							printf("\n\tNo se realizara la modificacion!\n");
 						}
 					}
 				}
@@ -192,7 +191,7 @@ int disp_delete(Display* pDisplay, int len)
 	}
 	else
 	{
-		printf("Los datos no pudieron ser leidos");
+		printf("\n\tLos datos no pudieron ser leidos");
 	}
 
 	return ret;
