@@ -20,7 +20,7 @@ typedef struct
 
 }Display;
 
-int disp_initList(Display displayList[], int len);
+int disp_initList(Display* displayList, int len);
 
 int disp_loadDisplay(Display* pDisplay);
 

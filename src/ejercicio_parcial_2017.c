@@ -15,7 +15,7 @@
 #include "utn_biblioteca.h"
 #include "utn_biblioteca_arrays.h"
 #include "Pantalla.h"
-#define DISPLAYS_LEN 1
+#define DISPLAYS_LEN 100
 
 
 int main(void) {

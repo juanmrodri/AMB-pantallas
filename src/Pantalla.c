@@ -19,7 +19,7 @@ static int dameUnIdNuevo(void);
 /// @param displayList recibe el puntero del array de estructura
 /// @param len tamaño del array
 /// @return -1 error o 0 ok!
-int disp_initList(Display displayList[], int len)
+int disp_initList(Display* displayList, int len)
 {
 	int ret=-1;
 	int i;
@@ -55,13 +55,13 @@ int disp_loadDisplay(Display* pDisplay)
 				{
 					if(pedirTextoUsuario(address, 128, 2, "\n\tPor favor ingrese el la direccion: ", "\tSe produjo un error!\n")==0)
 					{
-						printf("\n\tSe cargo correctamente!\n");
 						pDisplay->type = type;
 						pDisplay->price = price;
 						pDisplay->id = dameUnIdNuevo();
 						strncpy(pDisplay->name,name,sizeof(pDisplay->name));
 						strncpy(pDisplay->address,address,sizeof(pDisplay->address));
 						pDisplay->flagEmpty=OCCUP;
+						printf("\n\tSe cargo correctamente!\n");
 						ret=0;
 					}
 					else
