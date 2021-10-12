@@ -34,7 +34,7 @@ int main(void) {
 	hire_initList(hiringList,DISPLAYS_LEN);
 	do
 	{
-		pedirIntAUsuario(&response, 1, 8, 2, "Que desea realizar:\n-------------------\n\n\t1.Ingresar una pantalla\n\n\t2.Mostrar disponibilidad\n\n\t3.Mostrar pantallas contratadas\n\n\t4.Dar de baja una pantalla\n\n\t5.Contratacion\n\n\t6.Mostrar contraciones\n\n\t7.Limpiar pantalla\n\n\t8.Salir\n\n--------------> ","Error!");
+		pedirIntAUsuario(&response, 1, 9, 2, "Que desea realizar:\n-------------------\n\n\t1.Ingresar una pantalla\n\n\t2.Mostrar disponibilidad\n\n\t3.Mostrar pantallas contratadas\n\n\t4.Dar de baja una pantalla\n\n\t5.Contratatar publicidad\n\n\t6.Mostrar contraciones\n\n\t7.Dar de baja contratacion\n\n\t8.Limpiar pantalla\n\n\t9.Salir\n\n--------------> ","Error!");
 		switch(response)
 		{
 		case 1:
@@ -63,7 +63,7 @@ int main(void) {
 			}
 			break;
 		case 3:
-			printf("\n\tPantallas contratadas:\n");
+			printf("\n\tPantallas Ingresadas:\n");
 			if(disp_showEmpty(displayList,DISPLAYS_LEN)==DISPLAYS_LEN) // tener en cuenta aca que si devuelve 0 significa que no existen posiciones
 			{
 				printf("\n\tPor el momento no existen pantallas ingresadas\n\n");
@@ -98,7 +98,7 @@ int main(void) {
 			// aca va la contratacion
 			if(disp_showEmpty(displayList,DISPLAYS_LEN)==DISPLAYS_LEN) // tener en cuenta aca que si devuelve 0 significa que no existen posiciones
 			{
-					printf("\n\tPor el momento no existen pantallas ingresadas, por favor ingrese una para contratar\n\n");
+					printf("\n\tPor el momento no existen pantallas ingresadas, por favor ingrese una para contratar una publicidad\n\n");
 			}
 			else
 			{
@@ -139,12 +139,33 @@ int main(void) {
 			break;
 
 		case 7:
+			printf("\tDar de baja contratacion(por id):\n");
+						res = hire_showEmpty(hiringList,DISPLAYS_LEN);
+						if(res==DISPLAYS_LEN)
+						{
+							printf("\n\tNo se puede dar de baja ya que no existen publicidades contratadas\n\n");
+						}
+						else
+						{
+							if(hire_delete(hiringList,DISPLAYS_LEN)==0)
+							{
+								printf("\n\tSe dio de baja la contratacion!\n\n");
+							}
+							else
+							{
+								printf("\n\tNo se realizo la baja!\n\n");
+							}
+						}
+
+			break;
+
+		case 8:
 			system("cls");
 			break;
 		}
 
 
-	}while(response!=8);
+	}while(response!=9);
 
 
 

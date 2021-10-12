@@ -14,6 +14,7 @@ typedef struct
 	char cuit[64]; // lo guardo como char por los guiones
 	int duration;
 	char archiveName[128];
+	int idDisplay;
 	int flagEmpty; // 0: ocupado -- 1: vacio/libre
 
 }Hiring;
@@ -28,5 +29,7 @@ int hire_searchEmpty(Hiring* hiringList, int len, int* pos);
 int hire_showEmpty(Hiring* hiringList, int len);
 
 int hire_show(Hiring* hiringList, int len);
+
+int hire_delete(Hiring* hiringList, int len);
 
 #endif /* HIRING_H_ */

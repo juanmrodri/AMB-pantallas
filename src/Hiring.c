@@ -42,7 +42,7 @@ int hire_loadDisplay(Hiring* hiringList)
 
 	if(pedirTextoUsuario(cuit, 64, 2, "\tPor favor ingrese el cuit: ", "\tSe produjo un error!\n")==0) // LCD 0 LED 1
 	{
-		if(pedirIntAUsuario(&duration, 1, 30, 2, "\n\tPor favor ingrese la duracion: ", "\tSe produjo un error!\n")==0)
+		if(pedirIntAUsuario(&duration, 1, 30, 2, "\n\tPor favor ingrese la duracion(dias): ", "\tSe produjo un error!\n")==0)
 		{
 			if(pedirTextoUsuario(archiveName, 128, 2, "\n\tPor favor ingrese el nombre del archivo de video: ", "\tSe produjo un error!\n")==0)
 				{
@@ -113,13 +113,61 @@ int hire_show(Hiring* hiringList, int len)
 				if(hiringList[i].flagEmpty==OCCUP)
 					{
 						printf("\n************************************\n");
-						printf("\tDuracion: %d\n\tNombre de archivo cargado: %s\n\n",hiringList[i].duration,hiringList[i].archiveName);
+						printf("\tId contratacion: %d\n\n\tDuracion(dias): %d\n\n\tNombre de archivo cargado: %s\n\n",hiringList[i].id,hiringList[i].duration,hiringList[i].archiveName);
 						ret=0;
 					}
 			}
 		}
 
 	return ret;
+}
+
+int hire_delete(Hiring* hiringList, int len)
+{
+	int ret=-1;
+	int bufferId;
+	int bufferResponse;
+	if(hiringList!=NULL && len>0)
+	{
+		if(pedirIntAUsuario(&bufferId, 1, 5, 2, "\tPor favor, ingrese el ID de la pantalla que quiere modificar: ", "\tError!!!\n")==0)
+			{
+				for(int i=0; i<len;i++)
+				{
+					if(hiringList[i].id==bufferId)
+					{
+						printf("\tUsted esta por dar de baja: %s\n", hiringList[i].archiveName);
+						if(pedirIntAUsuario(&bufferResponse, 0, 1, 2, "\tDesea continuar(0 si- 1 no)? ", "Error!!!\n")==0)
+						{
+							if(bufferResponse==0)
+							{
+								hiringList[i].flagEmpty=1; // lo cambio a libre!
+								ret=0;
+								printf("\n\tEl dato fue dado de baja!!!\n");
+							}
+							else
+							{
+								// estuvo de acuerdo pero existe esta instancia donde puede fallar y no darse de baja
+								printf("\n\tNo se realizara la modificacion!\n");
+							}
+
+						}
+						else
+						{
+							// no esta de acuerdo
+							printf("\n\tNo se realizara la modificacion!\n");
+						}
+					}
+				}
+
+			}
+	}
+	else
+	{
+		printf("\n\tLos datos no pudieron ser leidos");
+	}
+
+	return ret;
+
 }
 
 static int dameUnIdNuevo(void)
