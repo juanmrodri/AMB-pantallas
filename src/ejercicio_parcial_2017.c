@@ -15,6 +15,7 @@
 #include "utn_biblioteca.h"
 #include "utn_biblioteca_arrays.h"
 #include "Pantalla.h"
+#include "Hiring.h"
 #define DISPLAYS_LEN 100
 
 
@@ -23,14 +24,17 @@ int main(void) {
 	int response;
 	int res;
 	int posDetected;
+	int hirePosDetected;
 
 
 	Display displayList[DISPLAYS_LEN];
+	Hiring hiringList[DISPLAYS_LEN];
 
 	disp_initList(displayList,DISPLAYS_LEN);
+	hire_initList(hiringList,DISPLAYS_LEN);
 	do
 	{
-		pedirIntAUsuario(&response, 1, 6, 2, "Que desea realizar:\n-------------------\n\n\t1.Ingresar una pantalla\n\n\t2.Mostrar disponibilidad\n\n\t3.Mostrar pantallas contratadas\n\n\t4.Dar de baja una pantalla\n\n\t5.Limpiar pantalla\n\n\t6.Salir\n\n--------------> ","Error!");
+		pedirIntAUsuario(&response, 1, 8, 2, "Que desea realizar:\n-------------------\n\n\t1.Ingresar una pantalla\n\n\t2.Mostrar disponibilidad\n\n\t3.Mostrar pantallas contratadas\n\n\t4.Dar de baja una pantalla\n\n\t5.Contratacion\n\n\t6.Mostrar contraciones\n\n\t7.Limpiar pantalla\n\n\t8.Salir\n\n--------------> ","Error!");
 		switch(response)
 		{
 		case 1:
@@ -62,7 +66,7 @@ int main(void) {
 			printf("\n\tPantallas contratadas:\n");
 			if(disp_showEmpty(displayList,DISPLAYS_LEN)==DISPLAYS_LEN) // tener en cuenta aca que si devuelve 0 significa que no existen posiciones
 			{
-				printf("\n\tPor el momento no existen pantallas contratas\n\n");
+				printf("\n\tPor el momento no existen pantallas ingresadas\n\n");
 			}
 			else
 			{
@@ -91,12 +95,56 @@ int main(void) {
 
 			break;
 		case 5:
+			// aca va la contratacion
+			if(disp_showEmpty(displayList,DISPLAYS_LEN)==DISPLAYS_LEN) // tener en cuenta aca que si devuelve 0 significa que no existen posiciones
+			{
+					printf("\n\tPor el momento no existen pantallas ingresadas, por favor ingrese una para contratar\n\n");
+			}
+			else
+			{
+			if(hire_searchEmpty(hiringList,DISPLAYS_LEN,&hirePosDetected)==0)
+			{
+					if(hire_loadDisplay(&hiringList[hirePosDetected])==0)
+					{
+					printf("\n\tProceso finalizado, publicidad contratada!\n\n");
+					}
+			}
+					else
+					{
+					printf("\n\tPor el momento, no hay mas lugar para cargar pantallas\n\n");
+					}
+		}
+			break;
+		case 6:
+			if(disp_showEmpty(displayList,DISPLAYS_LEN)==DISPLAYS_LEN) // tener en cuenta aca que si devuelve 0 significa que no existen posiciones
+			{
+					printf("\n\tPor el momento no existen pantallas ingresadas, por favor ingrese una para contratar\n\n");
+			}
+			else
+			{
+				// mostrar las contrataciones realizadas
+						printf("\n\tPublicidades contratadas:\n");
+
+				if(hire_showEmpty(hiringList,DISPLAYS_LEN)==DISPLAYS_LEN) // tener en cuenta aca que si devuelve 0 significa que no existen posiciones
+				{
+					printf("\n\tPor el momento no existen contrataciones\n\n");
+				}
+				else
+				{
+					hire_show(hiringList,DISPLAYS_LEN);
+				}
+
+			}
+
+			break;
+
+		case 7:
 			system("cls");
 			break;
 		}
 
 
-	}while(response!=6);
+	}while(response!=8);
 
 
 
