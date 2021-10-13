@@ -7,6 +7,7 @@
 
 #ifndef HIRING_H_
 #define HIRING_H_
+#include "Pantalla.h"
 
 typedef struct
 {
@@ -14,7 +15,7 @@ typedef struct
 	char cuit[64]; // lo guardo como char por los guiones
 	int duration;
 	char archiveName[128];
-	int idDisplay;
+	Display idDiplay;
 	int flagEmpty; // 0: ocupado -- 1: vacio/libre
 
 }Hiring;

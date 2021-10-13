@@ -25,7 +25,7 @@ int main(void) {
 	int res;
 	int posDetected;
 	int hirePosDetected;
-
+	int idDisplaySelected;
 
 	Display displayList[DISPLAYS_LEN];
 	Hiring hiringList[DISPLAYS_LEN];
@@ -34,7 +34,7 @@ int main(void) {
 	hire_initList(hiringList,DISPLAYS_LEN);
 	do
 	{
-		pedirIntAUsuario(&response, 1, 9, 2, "Que desea realizar:\n-------------------\n\n\t1.Ingresar una pantalla\n\n\t2.Mostrar disponibilidad\n\n\t3.Mostrar pantallas contratadas\n\n\t4.Dar de baja una pantalla\n\n\t5.Contratatar publicidad\n\n\t6.Mostrar contraciones\n\n\t7.Dar de baja contratacion\n\n\t8.Limpiar pantalla\n\n\t9.Salir\n\n--------------> ","Error!");
+		pedirIntAUsuario(&response, 1, 9, 2, "Que desea realizar:\n-------------------\n\n\t1.Ingresar una pantalla\n\n\t2.Mostrar disponibilidad\n\n\t3.Mostrar pantallas ingresadas\n\n\t4.Dar de baja una pantalla\n\n\t5.Contratatar publicidad\n\n\t6.Mostrar contraciones\n\n\t7.Dar de baja contratacion\n\n\t8.Limpiar pantalla\n\n\t9.Salir\n\n--------------> ","Error!");
 		switch(response)
 		{
 		case 1:
@@ -102,17 +102,24 @@ int main(void) {
 			}
 			else
 			{
-			if(hire_searchEmpty(hiringList,DISPLAYS_LEN,&hirePosDetected)==0)
-			{
-					if(hire_loadDisplay(&hiringList[hirePosDetected])==0)
-					{
-					printf("\n\tProceso finalizado, publicidad contratada!\n\n");
-					}
-			}
-					else
-					{
-					printf("\n\tPor el momento, no hay mas lugar para cargar pantallas\n\n");
-					}
+				printf("\n\tPantallas disponibles:\n");
+				disp_show(displayList,DISPLAYS_LEN); // aca mostramos las pantallas que estan ingresadas para que el usuario elija una
+				if(pedirIntAUsuario(&idDisplaySelected, 1, 100, 2, "\tPor favor ingrese el id de la pantalla donde quiere publicitar: ", "Se produjo un error!\n")==0)
+				{
+					// ingreso correcto
+					if(hire_searchEmpty(hiringList,DISPLAYS_LEN,&hirePosDetected)==0)
+							{
+							if(hire_loadDisplay(&hiringList[hirePosDetected])==0)
+								{
+									printf("\n\tProceso finalizado, publicidad contratada!\n\n");
+								}
+							}
+							else
+							{
+									printf("\n\tPor el momento, no hay mas lugar para cargar pantallas\n\n");
+							}
+				}
+
 		}
 			break;
 		case 6:
